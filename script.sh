@@ -34,7 +34,7 @@ if [ "$percent" -ge "$per" ]; then
     echo "Архивация файлов в $name_of_archive"
     sudo tar -czf $backup/$name_of_archive  $files_to_archive
     echo "Удаляем заархивированные файлы из папки $directory"
- sudo rm -f $files_to_archive
+    sudo rm -f $files_to_archive
     ls $directory
     echo "Backup: "
     ls "$(pwd)/$backup"
