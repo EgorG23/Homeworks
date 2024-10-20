@@ -85,7 +85,7 @@ if [ "$percent" -ge "$per" ]; then
     echo -e "Deletion of the archived files from $directory\n"
     sudo rm -f $files_to_archive
     ls $directory
-    echo -e "\nBackup: \n"
+    echo -e "\n$Backup: \n"
     ls "$(pwd)/$backup"
     echo -e "\nArchivation is over\n"
     echo -e "Total files in the directory AFTER archivation: $totalAfter\n"
