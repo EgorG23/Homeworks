@@ -9,13 +9,6 @@ backup=$6
 
 sizeOfDir=$(df -h "$directory" | awk 'NR==2 {print $2}' | sed 's/M//')
 
-if [ "$sizeForTest_MB" -gt "$sizeOfDir" ]; then
-    echo -e "\nYou cannot create $sizeForTest_MB MB of files because it is more than available space that equal to $sizeOfDir MB\n"
-    exit 0
-else
-    echo -e "\nAVAILABLE SIZE\n"
-fi
-
 if [ "$per" -gt 100 ]; then
     echo -e "\nInvalid value for the maximum percentage\n"
     exit 0
@@ -33,8 +26,16 @@ if [ ! -d "directory" ]; then
     echo -e "\n"
 fi
 
+if [ "$sizeForTest_MB" -gt "$sizeOfDir" ]; then
+    echo -e "\nYou cannot create $sizeForTest_MB MB of files because it is more than available space that equal to $sizeOfDir MB\n"
+    exit 0
+else
+    echo -e "\nAVAILABLE SIZE\n"
+fi
+
 if [ ! -d "$backup" ]; then
     mkdir "$backup"
+ echo -e "\nThe directory for archivation is created\n"
 fi
 
 create_file() {
@@ -93,5 +94,3 @@ else
     echo -e "The fullness of $directory is less than $per%. Archivation is not started\n"
     sudo find $directory -type f -not -name 'lost+found' -delete
 fi
-
-
