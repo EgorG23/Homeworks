@@ -1,22 +1,35 @@
-    echo -e "Total files in the directory BEFORE archivation: $numFiles\n"
-    if [ -z "files_to_archive" ]; then
-        echo -e "No files to archive\n"
-        exit 0
-    fi
-    totalAfter=$(($numFiles - $numOfFiles))
-    timename=$(date +%Y%m%d_%H%M%S)
-    name_of_archive="$timename.tar.gz"
-    echo -e "Acrchivation of the files in $name_of_archive\n"
-    sudo tar -czf $backup/$name_of_archive  $files_to_archive
-    echo -e "Deletion of the archived files from $directory\n"
-    sudo rm -f $files_to_archive
-    ls $directory
-    echo -e "\nBackup: \n"
-    ls "$(pwd)/$backup"
-    echo -e "\nArchivation is over\n"
-    echo -e "Total files in the directory AFTER archivation: $totalAfter\n"
-    sudo find $directory -type f -not -name 'lost+found' -delete
-else
-    echo -e "The fullness of $directory is less than $per%. Archivation is not started\n"
-    sudo find $directory -type f -not -name 'lost+found' -delete
-fi
+#!/bin/bash
+
+name_of_dir=$1
+directory="$(pwd)/$name_of_dir"
+backup="backup"
+
+testcase_1() {
+    echo -e "\n------------------------------------------------------\nTest 1: 1000MB, 20 files, Limit 70%, 5 files must be archived\n"
+    ./script "$directory" 1000 20 70 5 backup
+}
+
+testcase_2() {
+    echo -e "\n------------------------------------------------------\nTest 2: 150MB, 35 files, Limit is 50%, 10 files must be archived\n"
+    ./script "$directory" 150 35 50 45 backup
+}
+
+testcase_3() {
+    echo -e "\n------------------------------------------------------\nTest 3: 550MB, 40 files, Limit is 101%, 20 files must be archived\n"
+    ./script "$directory" 550 40 101 20 backup
+}
+
+timename=$(date +%Y%m%d_%H%M%S)
+name_of_backup="$timename"
+
+testcase_4() {
+    echo -e "\n------------------------------------------------------\nTest 4: 700MB, 150 files, Limit is 50%, 21 files must be archived\n"
+    ./script "$directory" 700 150 50 145 "$name_of_backup"
+}
+
+testcase_1
+testcase_2
+testcase_3
+testcase_4
+
+echo -e "\nThe End"
