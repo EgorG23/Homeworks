@@ -27,9 +27,19 @@ testcase_4() {
     ./script "$directory" 700 150 50 145 "$name_of_backup"
 }
 
+testcase_5() {
+    echo -e "\n------------------------------------------------------\nTest 5: incorrect input data"
+    ./script "$directory" aaaa "$name_of_backup"
+}
+
+testcase_6() {
+    echo -e "\n------------------------------------------------------\nTest 6: no input data"
+    ./script
 testcase_1
 testcase_2
 testcase_3
 testcase_4
+testcase_5
+testcase_6
 
 echo -e "\nThe End"
