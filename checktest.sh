@@ -43,7 +43,7 @@ testcase_7() {
 }
 
 testcase_8() {
-    echo -e "\n------------------------------------------------------\nTest 5: incorrect input data"
+    echo -e "\n------------------------------------------------------\nTest 8: 650MB, 200 files, Limit is 50%, 12 files must be archived"
     ./script "$directory" 650 200 50 12 "$name_of_backup"
 }
 
