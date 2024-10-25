@@ -82,7 +82,7 @@ if [ "$percent" -ge "$per" ]; then
     files_to_archive=$(sudo find "$directory" -type f -printf "%T+ %p\n" | sort | head -n "$numOfFiles" | cut -d ' ' -f2-)
    # echo -e "Total files in the directory BEFORE archivation: $numFiles\n"
     if [ -z "files_to_archive" ]; then
-    #    echo -e "No files to archive\n"
+        echo -e "FAILED! (No files to archive)\n"
         exit 1
     fi
     totalAfter=$(($numFiles - $numOfFiles))
