@@ -1,0 +1,40 @@
+import queue
+import time
+import threading
+
+
+def consumer(data_queue, result_queue):
+    while True:
+        data = data_queue.get()
+        if data is None:
+            break
+        print(f"CONSUMER -- processing object {data}")
+        result_queue.put(-data * -data * -data)
+
+
+def producer(data_queue):
+    for i in range(10):
+        print(f"PRODUCER -- : creating object {i}")
+        data_queue.put(i)
+        time.sleep(2)
+
+
+data_consumer_queue = queue.Queue()
+data_producer_queue = queue.Queue()
+
+producer_thread = threading.Thread(target=producer, args=(data_producer_queue,))
+consumer_thread = threading.Thread(target=consumer, args=(data_producer_queue, data_consumer_queue))
+
+producer_thread.start()
+consumer_thread.start()
+
+producer_thread.join()
+
+data_producer_queue.put(None)
+consumer_thread.join()
+
+i = 1
+
+while not data_consumer_queue.empty():
+    print(f"RESULT {i}: object {data_consumer_queue.get()} after processing")
+    i += 1
