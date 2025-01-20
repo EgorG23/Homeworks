@@ -8,15 +8,15 @@ def consumer(data_queue, result_queue):
         data = data_queue.get()
         if data is None:
             break
-        print(f"CONSUMER -- processing object {data}")
+        print(f"CONSUMER --   processing object {data}")
         result_queue.put(-data * -data * -data)
 
 
 def producer(data_queue):
-    for i in range(10):
-        print(f"PRODUCER -- : creating object {i}")
+    for i in range(25):
+        print(f"PRODUCER --   creating object {i}")
         data_queue.put(i)
-        time.sleep(2)
+        time.sleep(1)
 
 
 data_consumer_queue = queue.Queue()
